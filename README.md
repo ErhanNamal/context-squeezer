@@ -69,4 +69,4 @@ Contributions are welcome — open issues or pull requests for improvements. Add
 
 ## 📝 License
 
-Distributed under the ISC License. See LICENSE for details.
+Distributed under the MIT License. See LICENSE for details.
