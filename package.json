@@ -1,0 +1,24 @@
+{
+  "name": "context-squeezer",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "build": "tsc --outDir dist",
+    "test": "node ./scripts/run-tests.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+  ,
+  "bin": {
+    "context-squeezer": "bin/context-squeezer.js"
+  }
+}
