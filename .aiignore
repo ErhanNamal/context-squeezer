@@ -1,0 +1,6 @@
+# Local test outputs
+test_output.txt
+
+# Global compiled folders (Backup)
+dist
+node_modules

@@ -1,72 +1,123 @@
-# 🚀 Context-Squeezer
+# 🚀 Context-Squeezer-CLI
 
 ![CI](https://github.com/ErhanNamal/context-squeezer/actions/workflows/ci.yml/badge.svg)
-![npm](https://img.shields.io/badge/npm-friendly-brightgreen)
+[![npm version](https://img.shields.io/npm/v/context-squeezer-cli.svg?style=flat-flat)](https://www.npmjs.com/package/context-squeezer-cli)
+![npm downloads](https://img.shields.io/npm/dm/context-squeezer-cli?color=blue)
+![license](https://img.shields.io/npm/l/context-squeezer-cli?color=brightgreen)
 
-Lightweight CLI that packs a repository into a single, LLM-optimized context file. Ideal for feeding projects to ChatGPT, Claude, or local LLMs without wasting tokens on irrelevant files.
+Lightweight and blazing fast TypeScript CLI that packs an entire repository into a single, LLM-optimized context file. Ideal for feeding your codebases directly into ChatGPT, Claude, or local LLMs without wasting precious tokens on junk files.
 
 ---
 
 ## 🔥 Features
 
-- **Smart Code Squeezing:** Produces a structured, human- and LLM-friendly summary of your codebase.
-- **Automatic Ignore Detection:** Skips common heavy folders and files (`node_modules`, `.git`, `dist`, lockfiles, etc.).
-- **Live Stats & Token Estimation:** Shows total files, lines, characters and an estimated LLM token count.
-- **Custom Output:** Change the output filename or destination with a CLI flag.
+- **⚡ Blazing Fast Squeezing:** Traverses your repository and compiles a structured, human- and LLM-friendly master text file in milliseconds.
+- **🛡️ Default & Custom Ignores:** Automatically skips heavy or compiled asset folders (`node_modules`, `.git`, `dist`, lockfiles) and respects your custom `.aiignore` rules.
+- **🔒 Security & Privacy First:** Built-in binary file detection prevents image/PDF leakage, and an automated data masker redacts sensitive strings like API keys, secrets, or passwords before outputting.
+- **📊 Token Load Estimation:** Instantly calculates total processed files, lines, characters, and provides a live, estimated LLM token count.
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Quick Start (No Installation Required)
 
-Clone and install dependencies:
+You don't even need to clone or install it locally to try it out. Just navigate to your target project directory in your terminal and fire it up using `npx`:
+
+```bash
+npx context-squeezer-cli
+```
+
+This will immediately analyze your current directory and generate a clean `ai_context.txt` file in your root folder.
+
+---
+
+## ⚙️ Advanced Usage & Options
+
+You can easily customize the output filename or paths using standard CLI flags:
+
+```bash
+# Save to a custom file name
+npx context-squeezer-cli --output codebase_summary.txt
+
+# Short flag version
+npx context-squeezer-cli -o summary.txt
+```
+
+---
+
+## 🚫 Custom Ignore Rules (.aiignore)
+
+Create an `.aiignore` file in the root of your project to skip specific extensions or internal directories, just like a `.gitignore`:
+
+```plaintext
+# .aiignore template
+# Ignore entire custom scripts folder
+scripts
+
+# Ignore specific output logs
+test_output.txt
+
+# Ignore all JSON files
+*.json
+```
+
+---
+
+## 🖥️ Terminal Dashboard Preview
+
+When run successfully, the CLI renders a compact, high-readability analytics report directly in your terminal:
+
+```plaintext
+=============================================
+🚀 CONTEXT-SQUEEZER - AI Context Prepared
+=============================================
+
+🔍 Analyzing directory: /home/user/projects/my-awesome-app
+
+📊 PROJECT ANALYTICS REPORT
+---------------------------------------------
+📂 Total Files Compressed  : 12
+📝 Total Lines of Code     : 1,420
+🔤 Total Character Count   : 45,280
+🪙 Estimated LLM Token Load: ~11,320 tokens
+---------------------------------------------
+
+✅ Success! Your LLM context file is ready:
+👉 /home/user/projects/my-awesome-app/ai_context.txt
+```
+
+---
+
+## 🛠️ Local Development & Contribution
+
+If you want to clone the repo, add new features, or tweak the scanner locally:
+
+### Clone the repository:
 
 ```bash
 git clone https://github.com/ErhanNamal/context-squeezer.git
 cd context-squeezer
+```
+
+### Install dependencies:
+
+```bash
 npm install
 ```
 
-## 🚀 Usage
-
-Squeeze the current project and write the default `ai_context.txt`:
+### Run the CLI in development mode:
 
 ```bash
 npm start
 ```
 
-Specify a custom output path:
+### Build the production files:
 
 ```bash
-npm start -- --output my_project_summary.txt
+npm run build
 ```
 
-## 🖥️ Terminal Dashboard (example)
-
-When run, the CLI prints a compact analytics dashboard similar to the example below:
-
-```
-=============================================
-🚀 CONTEXT-SQUEEZER - AI Context Prepared
-=============================================
-
-🔍 Analyzing directory: D:\Koufc\Yazılım Çalışmaları\Karışık\context-squeezer
-
-📊 PROJECT ANALYTICS REPORT
----------------------------------------------
-📂 Total Files Compressed  : 5
-📝 Total Lines of Code     : 155
-🔤 Total Character Count   : 4940
-🪙 Estimated LLM Token Load: ~1235 tokens
----------------------------------------------
-
-✅ Success! Your LLM context file is ready:
-👉 D:\Koufc\Yazılım Çalışmaları\Karışık\context-squeezer\ai_context.txt
-```
-
-## 🤝 Contributing
-
-Contributions are welcome — open issues or pull requests for improvements. Add examples, edge-case handling, or CI workflows to help others use the tool.
+---
 
 ## 📝 License
 
-Distributed under the MIT License. See LICENSE for details.
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.

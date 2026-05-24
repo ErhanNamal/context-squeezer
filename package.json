@@ -1,24 +1,43 @@
 {
-  "name": "context-squeezer",
-  "version": "1.0.0",
-  "description": "",
+  "name": "context-squeezer-cli",
+  "version": "1.0.4",
+  "description": "Lightweight CLI that packs a repository into a single, LLM-optimized context file.",
   "type": "module",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "tsx src/index.ts",
-    "build": "tsc --outDir dist",
-    "test": "node ./scripts/run-tests.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^20.11.0",
-    "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
-  }
-  ,
+  "main": "dist/index.js",
   "bin": {
     "context-squeezer": "bin/context-squeezer.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node ./dist/index.js",
+    "test": "node ./scripts/run-tests.js"
+  },
+  "keywords": [
+    "cli",
+    "llm",
+    "context",
+    "tokenizer",
+    "ai",
+    "devtools"
+  ],
+  "author": "Erhan Namal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErhanNamal/context-squeezer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ErhanNamal/context-squeezer/issues"
+  },
+  "homepage": "https://github.com/ErhanNamal/context-squeezer#readme",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
   }
 }
