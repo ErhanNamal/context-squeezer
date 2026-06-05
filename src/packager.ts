@@ -2,11 +2,21 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { shouldIgnore } from './ignorer.js';
 
+export interface FileInfo {
+    path: string;
+    lines: number;
+    chars: number;
+    extension: string;
+}
+
 export interface ProjectStats {
     totalFiles: number;
     totalLines: number;
     totalChars: number;
     estimatedTokens: number;
+    extensionBreakdown: Record<string, number>;
+    largestFiles: FileInfo[];
+    timestamp: string;
 }
 
 const MAX_FILE_SIZE_BYTES = 500 * 1024;
@@ -57,11 +67,17 @@ function maskSensitiveData(content: string): string {
 
 export function packProject(dirPath: string): { combinedContent: string; stats: ProjectStats } {
     let combinedContent = '';
+    const filesList: FileInfo[] = [];
+    const extensionBreakdown: Record<string, number> = {};
+    
     const stats: ProjectStats = {
         totalFiles: 0,
         totalLines: 0,
         totalChars: 0,
-        estimatedTokens: 0
+        estimatedTokens: 0,
+        extensionBreakdown: {},
+        largestFiles: [],
+        timestamp: new Date().toISOString()
     };
 
     function scan(currentDir: string) {
@@ -93,9 +109,24 @@ export function packProject(dirPath: string): { combinedContent: string; stats: 
                     const content = fs.readFileSync(fullPath, 'utf-8');
                     const safeContent = maskSensitiveData(content);
                     
+                    const lines = safeContent.split('\n').length;
+                    const chars = safeContent.length;
+                    const ext = path.extname(fullPath) || 'no-extension';
+                    
                     stats.totalFiles += 1;
-                    stats.totalLines += safeContent.split('\n').length;
-                    stats.totalChars += safeContent.length;
+                    stats.totalLines += lines;
+                    stats.totalChars += chars;
+                    
+                    // Extension breakdown
+                    extensionBreakdown[ext] = (extensionBreakdown[ext] || 0) + 1;
+                    
+                    // Track file for "largest files" report
+                    filesList.push({
+                        path: relativePath,
+                        lines,
+                        chars,
+                        extension: ext
+                    });
 
                     combinedContent += `\n--- START OF FILE: ${relativePath} ---\n`;
                     combinedContent += safeContent;
@@ -109,6 +140,12 @@ export function packProject(dirPath: string): { combinedContent: string; stats: 
 
     scan(dirPath);
     stats.estimatedTokens = Math.ceil(stats.totalChars / 4);
+    stats.extensionBreakdown = extensionBreakdown;
+    
+    // Get top 5 largest files
+    stats.largestFiles = filesList
+        .sort((a, b) => b.chars - a.chars)
+        .slice(0, 5);
 
     return { combinedContent, stats };
 }

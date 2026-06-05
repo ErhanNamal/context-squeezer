@@ -15,6 +15,9 @@ Lightweight and blazing fast TypeScript CLI that packs an entire repository into
 - **🛡️ Default & Custom Ignores:** Automatically skips heavy or compiled asset folders (`node_modules`, `.git`, `dist`, lockfiles) and respects your custom `.aiignore` rules.
 - **🔒 Security & Privacy First:** Built-in binary file detection prevents image/PDF leakage, and an automated data masker redacts sensitive strings like API keys, secrets, or passwords before outputting.
 - **📊 Token Load Estimation:** Instantly calculates total processed files, lines, characters, and provides a live, estimated LLM token count.
+- **🎨 Enhanced Terminal UI:** Beautiful colored output with improved readability and detailed analytics breakdown.
+- **📈 Detailed File Statistics:** File count by extension, largest files report, and comprehensive project metrics.
+- **📋 JSON Output Mode:** Export statistics in JSON format for programmatic access and automation.
 
 ---
 
@@ -40,7 +43,21 @@ npx context-squeezer-cli --output codebase_summary.txt
 
 # Short flag version
 npx context-squeezer-cli -o summary.txt
+
+# Export statistics in JSON format (v1.1.0+)
+npx context-squeezer-cli --json
+
+# Combine options
+npx context-squeezer-cli -o summary.txt --json
 ```
+
+### Available Options:
+
+| Option | Description | Example |
+|--------|-------------|---------|
+| `-h, --help` | Show help message | `context-squeezer -h` |
+| `-o, --output <file>` | Custom output filename | `context-squeezer -o my_context.txt` |
+| `--json` | Export stats in JSON format | `context-squeezer --json` |
 
 ---
 
@@ -67,22 +84,61 @@ test_output.txt
 When run successfully, the CLI renders a compact, high-readability analytics report directly in your terminal:
 
 ```plaintext
-=============================================
-🚀 CONTEXT-SQUEEZER - AI Context Prepared
-=============================================
+═════════════════════════════════════════════════════════
+  🚀 CONTEXT-SQUEEZER v1.1.0 - AI Context Generator
+═════════════════════════════════════════════════════════
 
 🔍 Analyzing directory: /home/user/projects/my-awesome-app
 
+
 📊 PROJECT ANALYTICS REPORT
----------------------------------------------
-📂 Total Files Compressed  : 12
-📝 Total Lines of Code     : 1,420
-🔤 Total Character Count   : 45,280
-🪙 Estimated LLM Token Load: ~11,320 tokens
----------------------------------------------
+───────────────────────────────────────────────────────
+📂 Total Files Compressed   : 13
+📝 Total Lines of Code      : 1,420
+🔤 Total Characters         : 45,280
+💾 Output File Size         : 45.28 KB
+🪙 Estimated LLM Token Load : ~11,320 tokens
+───────────────────────────────────────────────────────
+
+📁 FILES BY EXTENSION:
+  .ts: 4 files
+  .js: 3 files
+  .json: 2 files
+  .md: 1 file
+  .yml: 1 file
+  .env: 1 file
+
+🏆 TOP 5 LARGEST FILES:
+  1. src/main.ts (287 lines)
+  2. src/utils/helpers.ts (156 lines)
+  3. README.md (123 lines)
+  4. src/api/routes.ts (98 lines)
+  5. src/services/auth.ts (87 lines)
 
 ✅ Success! Your LLM context file is ready:
 👉 /home/user/projects/my-awesome-app/ai_context.txt
+```
+
+### JSON Output Mode (v1.1.0+)
+
+```bash
+$ npx context-squeezer-cli --json
+```
+
+```json
+{
+  "success": true,
+  "version": "1.1.0",
+  "timestamp": "2026-06-05T08:09:15.898Z",
+  "outputFile": "/home/user/projects/my-awesome-app/ai_context.txt",
+  "stats": {
+    "totalFiles": 13,
+    "totalLines": 1420,
+    "totalChars": 45280,
+    "fileSize": "45.28 KB",
+    "estimatedTokens": 11320
+  }
+}
 ```
 
 ---

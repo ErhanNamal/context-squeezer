@@ -1,6 +1,6 @@
 {
   "name": "context-squeezer-cli",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Lightweight CLI that packs a repository into a single, LLM-optimized context file.",
   "type": "module",
   "main": "dist/index.js",
